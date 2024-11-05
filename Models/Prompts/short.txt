@@ -1,0 +1,3 @@
+Analise os resultados deste cluster: identifique as características principais que definem a formação do cluster,
+examine a distribuição de outliers e avalie a influência de variáveis.Utilize técnicas de Explainable Generative AI (XGAI) 
+para gerar explicações que contextualizem os padrões observados e proponha hipóteses sobre os fatores que contribuem para a formação desse cluster.
