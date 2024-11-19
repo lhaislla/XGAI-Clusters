@@ -1,22 +1,25 @@
 # Load_clusters.py
 
 import pandas as pd
-from Models.DefaultConfig import DefaultConfig
+from DefaultConfig import DefaultConfig
 
 class LoadClusters:
     
     def __init__(self):
         self.config = DefaultConfig()
         self.clusters = None
-    
-    def load_clusters(self, cluster_file):
+     
+    def load_clusters(self, type_algorithm, cluster_file):
         """
         Carrega os dados de clusters a partir de um arquivo específico.
         """
-        cluster_path = f"{self.config.data_directory}/{cluster_file}"
-        self.clusters = pd.read_excel(cluster_path)
+        cluster_path = self.get_path_cluster(type_algorithm, cluster_file)
+        self.clusters = pd.read_csv(cluster_path)
         print("Clusters carregados com sucesso!")
         return self.clusters
+    
+    def get_path_cluster(self, type_algorithm, cluster_file):
+        return f"{self.config.data_directory}/{type_algorithm}/{cluster_file}"
     
     def analyze_clusters(self):
         """

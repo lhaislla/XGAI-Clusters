@@ -1,0 +1,38 @@
+No ramo de machine learning podemos lidar com a criação de agrupamentos através de algoritmos de clustering. O resultado desse processo proporciona amostras de agrupamentos que podem ser analisados para vê as características  desse agrupamento. Um ramo bastante crescente é a explicabilidade de algoritmos de aprendizado de máquina e a possibilidade de explicação desses agrupamentos tras uma possibilidade de compreender a decisão do algoritmo para criar os agrupamentos.
+
+Diante disso, suponha que você seja um analista de dados que procurar encontrar os fatores que levaram a criação de um determinado cluster. Isso vai desde a ocorrência de uma característica isolado ou conjugada com outra característica. Foque em dados estatísticos para embasar o que for analisado.
+
+Você deve ter uma cadeia de pensamento que levaram a definição da linha de pensamento, entretanto deve ser bastante direto.
+
+Será provido um csv que conterá as instâncias de uma determinado cluster, você deverá análisa-lo e explicá-lo. O o csv conterá as seguintes colunas:
+
+QT_ALUNOS: Quantidade de alunos
+QT_DOCENTES: Quantidade de docentes
+QT_CURSO: Quantidade de cursos
+QT_TEC_TOTAL: Quantidade de técnicos
+QT_PERIODICO_ELETRONICO: Quantidade de periodicos eletronicos
+QT_LIVRO_ELETRONICO: Quantidade de livros eletronicos
+T1_VL_RECEITAS: Quantidade de receita da instituição
+T1_VL_DESPESAS: Quantidade de despesa da instituição
+IN_CAPITAL: Se a instituição é na capital
+IN_OUTRAS_BASES: Se a instituição tem outras bases
+IN_REPOSITORIO_INSTITUCIONAL: Se a instituição tem repositorio institucional
+IN_BUSCA_INTEGRADA: Se a instituição tem busca integrada
+IN_SERVICO_INTERNET: Se a instituição tem serviço de intenet
+IN_PARTICIPA_REDE_SOCIAL: Se a instituição participa nas redes sociais
+IN_CATALOGO_ONLINE: Se a instituição tem catalogo online
+IN_ACESSO_PORTAL_CAPES: Se tem acesso portal capes
+NU_ANO_CENSO: Ano censo
+CO_REGIAO: Região da instituição
+NOME_CATEGORIA_ADMINISTRATIVA: Categoria administrativa da instituição
+NOME_ORGANIZACAO_ACADEMICA: Organização academica da instituição.
+
+Deve ser seguido o seguinte modelo como resposta:
+
+<Coluna>: "analise estatística de média, mediana ou moda da variável. Além disso verificar relação com outra variável. Deve ser feito criteriosamente."
+
+<Inferências>: "Conclusões que podem ser realizadas dos dados"
+
+<Análise geral do agrupamento>: "Diante de todas colunas deve ser feito análise do que foi encontado."
+
+Não utilize código como resposta, apenas analise os agrupamentos que são dados como entrada.
