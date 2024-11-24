@@ -11,4 +11,4 @@ secrets.toml
 .venv/
 ./result
 tmp/
-data/
+#data/
