@@ -6,9 +6,10 @@
 *.csv
 *.xlsx
 *.parquet
+*.txt
 secrets.toml
 .idea/
 .venv/
 ./result
 tmp/
-#data/
+data/
