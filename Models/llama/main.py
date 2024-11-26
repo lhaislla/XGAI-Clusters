@@ -28,7 +28,7 @@ def main(prompt_file='Fase 1 - Direto.txt', cluster_type="K-means"):
         for temperature in temperatures:
             print(f"Usando temperatura: {temperature}")
 
-            ia_gen_model = IAGenModel(temperature=temperature)
+            ia_gen_model = IALlamaModel(temperature=temperature)
             ia_gen_model.create_model(initial_instruction=prompt)
 
           

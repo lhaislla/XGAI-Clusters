@@ -1,7 +1,6 @@
 import os
 from DefaultConfig import DefaultConfig
-from LoadClusters import LoadClusters
-
+from Load_clusters import LoadClusters
 class ClusterXAI(DefaultConfig):
     def __init__(self):
         super().__init__()

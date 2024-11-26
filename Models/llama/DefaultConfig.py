@@ -5,9 +5,11 @@ from LoadFile import LoadFile
 class DefaultConfig:
     def __init__(self):
        
-        self.data_directory = os.getenv("ROOT_PATH_PROJECT") + "\\data"
-        self.api_url = "http://localhost:11434/api/generate"  # Endpoint para o Llama 3.2
-
+        self.data_directory = os.getenv("ROOT_PATH_PROJECT") + "//data"
+        self.api_url = os.getenv("URL")
+        self.user = os.getenv("USER")
+        self.password = os.getenv("PASS")
+        
     def load_data_file(self, filename):
        
         file_path = os.path.join(self.data_directory, filename)
