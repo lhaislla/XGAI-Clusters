@@ -5,12 +5,13 @@ from LoadFile import LoadFile
 from LoadClusters import LoadClusters
 from IAGenModel import IAGenModel
 
+
 class ClusterXAI(DefaultConfig):
 
     def __init__(self):
         super().__init__()
 
-        self.loadFile = LoadFile()  
+        self.loadFile = LoadFile()
         loadClusters = LoadClusters()
         self.clusters_path = {
             'K-means': {
@@ -36,31 +37,33 @@ class ClusterXAI(DefaultConfig):
             linhas = "".join(file.readlines())
         return linhas
 
+
 def main(prompt_file='Fase 1 - Direto.txt', cluster_type="K-means"):
     if cluster_type not in ["K-means", 'Agglomerative']:
         raise Exception('Algoritmo não mapeado')
 
-   
     if not os.path.isdir(os.path.join(os.getcwd(), "results")):
         os.makedirs(os.path.join(os.getcwd(), "results"))
 
     model = ClusterXAI()
     cluster_paths = model.clusters_path[cluster_type].items()
 
-   
-    results = pd.DataFrame([], columns=['algorithm', 'cluster', 'temperature', 'prompt', 'result'])
+    
+    results_file_path = os.path.join(os.getcwd(), "results", f"{cluster_type}_{prompt_file.split(' - ')[0]}_results.csv")
+
+
+    if os.path.exists(results_file_path):
+        results = pd.read_csv(results_file_path)
+    else:
+        results = pd.DataFrame([], columns=['algorithm', 'cluster', 'temperature', 'prompt', 'result'])
 
     for alias, path in cluster_paths:
-        print(f"Processando cluster: {alias}, arquivo: {path}")
+        print(alias, path)
 
         try:
             
             file_info = model.loadFile.upload_file_to_webui(path)
-
-            
             prompt = model.create_instruction(prompt_file)
-
-            
             temperatures = [0, 0.5, 1]
 
             for temperature in temperatures:
@@ -73,24 +76,24 @@ def main(prompt_file='Fase 1 - Direto.txt', cluster_type="K-means"):
                 
                 content = response.get('choices')[0].get('message').get('content')
 
-               
+                
                 result_row = [cluster_type, alias, temperature, prompt_file, content]
-               
-                model.add_item_to_dataframe(results, result_row)
+                results.loc[len(results)] = result_row
 
         except Exception as e:
             print(f"Erro ao processar o arquivo {path}: {e}")
 
-   
-    results_file_path = os.path.join(os.getcwd(), "results", f"{cluster_type}_{prompt_file.split(' - ')[0]}_results.csv")
-    results.to_csv(results_file_path, index=False)
-    print(f"Arquivo CSV salvo em: {results_file_path}")
+        
+        results.to_csv(results_file_path, index=False)
+        
+
 
 if __name__ == "__main__":
     main('Fase 1 - Direto.txt', 'K-means')
-    # main('Fase 2 - Cadeia de pensamento.txt', 'K-means')
-    # main('Fase 2 - Cadeia de pensamento.txt', 'Agglomerative')
-    # main('Fase 3 - Descrição.txt', 'K-means')
-    # main('Fase 3 - Descrição.txt', 'Agglomerative')
-    # main('Fase 4 - Com modelo.txt', 'K-means')
-    # main('Fase 4 - Com modelo.txt', 'Agglomerative')
+    main('Fase 1 - Direto.txt', 'Agglomerative')
+    main('Fase 2 - Cadeia de pensamento.txt', 'K-means')
+    main('Fase 2 - Cadeia de pensamento.txt', 'Agglomerative')
+    main('Fase 3 - Descrição.txt', 'K-means')
+    main('Fase 3 - Descrição.txt', 'Agglomerative')
+    main('Fase 4 - Com modelo.txt', 'K-means')
+    main('Fase 4 - Com modelo.txt', 'Agglomerative')

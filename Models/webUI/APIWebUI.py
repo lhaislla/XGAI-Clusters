@@ -16,10 +16,10 @@ class APIWebUI:
         }
         #print(headers)
         data = {
-            "model": "llama3.2:latest",
+            #"model": "llama3.2:latest",
             #"model": "qwen2.5:latest",
             #"model": "mistral:latest",
-            #"model": "deepseek-v2:latest",
+            "model": "deepseek-v2:latest",
             "messages": [{"role": "user", "content": message}]
         }
 
