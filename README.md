@@ -26,6 +26,9 @@ O objetivo é aplicar modelos generativos que proporcionem insights sobre a estr
   - **Agglomerative**
   - **K-means**
   - **Base final.csv**
+  - **Analise_seewt.ipynb**: Gerar analises preliminares.
+  - **SWEETVIZ_REPORT.html**: Vizualização das análises preliminares.
+  - **CLUSTER_censo.ipynb**: Criação dos clusters e csv's a serem analisados pela IA. Generativa. 
 
 - **Analise resultados XGAI Cluster.ipynb**: Notebook com as metricas de análsie dos resultados.
 - **.env**: Arquivo de configuração para variáveis de ambiente necessárias à execução do projeto. O arquivo `env_models.txt` detalha as variaveis de ambiente necessárias. 
