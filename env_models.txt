@@ -1,0 +1,13 @@
+# Diretórios
+ROOT_PATH_PROJECT=./XGAI-Clusters
+
+#Gemini
+GOOGLE_API_KEY=
+
+# WebUI: 
+TOKEN_JWT=
+KEY_llama=
+USER=
+PASS=
+URL=
+

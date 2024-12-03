@@ -1,16 +1,17 @@
 import os
+import pandas as pd
 from DefaultConfig import DefaultConfig
 from LoadFile import LoadFile
-import pandas as pd
-
-from Load_clusters import LoadClusters
+from LoadClusters import LoadClusters
 from IAGenModel import IAGenModel
+
 
 class ClusterXAI(DefaultConfig):
 
     def __init__(self):
         super().__init__()
 
+        self.loadFile = LoadFile()
         loadClusters = LoadClusters()
         self.clusters_path = {
             'K-means': {
@@ -31,69 +32,68 @@ class ClusterXAI(DefaultConfig):
             }
         }
 
-    
-    def create_instruction(self,prompt_file):
+    def create_instruction(self, prompt_file):
         with open(os.path.join("./Prompts", prompt_file), 'r', encoding='utf-8') as file:
             linhas = "".join(file.readlines())
         return linhas
-    
 
 
 def main(prompt_file='Fase 1 - Direto.txt', cluster_type="K-means"):
-
-    if (cluster_type not in ["K-means", 'Agglomerative']):
+    if cluster_type not in ["K-means", 'Agglomerative']:
         raise Exception('Algoritmo não mapeado')
-    
-    if (not os.path.isdir(os.path.join(os.getcwd(), "results"))):
+
+    if not os.path.isdir(os.path.join(os.getcwd(), "results")):
         os.makedirs(os.path.join(os.getcwd(), "results"))
 
     model = ClusterXAI()
-
     cluster_paths = model.clusters_path[cluster_type].items()
 
-    results = pd.DataFrame([], columns=['algorithm', 'cluster', 'temperature', 'prompt', 'result'])
+    
+    results_file_path = os.path.join(os.getcwd(), "results", f"{cluster_type}_{prompt_file.split(' - ')[0]}_results.csv")
+
+
+    if os.path.exists(results_file_path):
+        results = pd.read_csv(results_file_path)
+    else:
+        results = pd.DataFrame([], columns=['algorithm', 'cluster', 'temperature', 'prompt', 'result'])
 
     for alias, path in cluster_paths:
-        print(alias,path)
-        file_gemini = model.load_image_to_gemini(path)
-    
-        prompt = model.create_instruction(prompt_file)
+        print(alias, path)
 
-        LoadFile.wait_for_files_active([file_gemini])
-
-        temperatures = [
-            0, 
-            0.5, 
-            1 , 
-            1.5, 
-            2
-        ]
-
-        for temperature in temperatures:
-            print(alias, temperature)
-
-            ia_gen_model = IAGenModel(temperature=temperature)
-
-            ia_gen_model.create_model(initial_instruction=prompt)
-
-            chat_session = ia_gen_model.model.start_chat( history=[] )
-
-            response = chat_session.send_message(file_gemini)
-
-            model.add_item_to_dataframe(results, [cluster_type, alias, temperature, prompt_file, response.text])
+        try:
             
-    results.to_csv(os.path.join(os.getcwd(), "results", f"{cluster_type}_{prompt_file.split(" - ")[0]}_results.csv"), index=False)
+            file_info = model.loadFile.upload_file_to_webui(path)
+            prompt = model.create_instruction(prompt_file)
+            temperatures = [0, 0.5, 1]
+
+            for temperature in temperatures:
+                print(f"Temperatura: {temperature} para o cluster: {alias}")
+
+                
+                webui_model = IAGenModel(temperature=temperature)
+                response = webui_model.create_model(message=prompt)
+
+                
+                content = response.get('choices')[0].get('message').get('content')
+
+                
+                result_row = [cluster_type, alias, temperature, prompt_file, content]
+                results.loc[len(results)] = result_row
+
+        except Exception as e:
+            print(f"Erro ao processar o arquivo {path}: {e}")
+
+        
+        results.to_csv(results_file_path, index=False)
+        
 
 
-
-import sys
 if __name__ == "__main__":
-
-    #main('Fase 1 - Direto.txt', 'K-means')
-    main('Fase 1 - Direto.txt', 'Agglomerative')
-    main('Fase 2 - Cadeia de pensamento.txt', 'K-means')
-    main('Fase 2 - Cadeia de pensamento.txt', 'Agglomerative')
-    main('Fase 3 - Descrição.txt', 'K-means')
-    main('Fase 3 - Descrição.txt', 'Agglomerative')
+    # main('Fase 1 - Direto.txt', 'K-means')
+    # main('Fase 1 - Direto.txt', 'Agglomerative')
+    #main('Fase 2 - Cadeia de pensamento.txt', 'K-means')
+    # main('Fase 2 - Cadeia de pensamento.txt', 'Agglomerative')
+    # main('Fase 3 - Descrição.txt', 'K-means')
+    # main('Fase 3 - Descrição.txt', 'Agglomerative')
     main('Fase 4 - Com modelo.txt', 'K-means')
-    main('Fase 4 - Com modelo.txt', 'Agglomerative')
+    # main('Fase 4 - Com modelo.txt', 'Agglomerative')
