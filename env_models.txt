@@ -6,7 +6,7 @@ GOOGLE_API_KEY=
 
 # WebUI: 
 TOKEN_JWT=
-KEY_llama=
+KEY_WebUI=
 USER=
 PASS=
 URL=

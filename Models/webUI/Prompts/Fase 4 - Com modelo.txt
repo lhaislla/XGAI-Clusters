@@ -35,4 +35,6 @@ Deve ser seguido o seguinte modelo como resposta:
 
 <Análise geral do agrupamento>: "Diante de todas colunas deve ser feito análise do que foi encontado."
 
+A entrada será em formato csv, separado por ";".
+
 Não utilize código como resposta, apenas analise os agrupamentos que são dados como entrada.

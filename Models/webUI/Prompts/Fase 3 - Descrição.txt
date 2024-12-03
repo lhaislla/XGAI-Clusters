@@ -29,4 +29,6 @@ NOME_ORGANIZACAO_ACADEMICA: Organização academica da instituição.
 
 Ao final deve ser feito uma analise geral do agrupamento.
 
+A entrada será em formato csv, separado por ";".
+
 Não utilize código como resposta, apenas analise os agrupamentos que são dados como entrada.
