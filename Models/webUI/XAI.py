@@ -58,7 +58,7 @@ def main(prompt_file='Fase 1 - Direto.txt', cluster_type="K-means"):
         results = pd.DataFrame([], columns=['algorithm', 'cluster', 'temperature', 'prompt', 'result'])
 
     for alias, path in cluster_paths:
-        print(alias, path)
+        print(f"{alias} - Cluster")
 
         try:
             
@@ -67,7 +67,7 @@ def main(prompt_file='Fase 1 - Direto.txt', cluster_type="K-means"):
             temperatures = [0, 0.5, 1]
 
             for temperature in temperatures:
-                print(f"Temperatura: {temperature} para o cluster: {alias}")
+                print(f"Temperatura {temperature} para o {alias} cluster")
 
                 
                 webui_model = IAGenModel(temperature=temperature)
@@ -89,11 +89,11 @@ def main(prompt_file='Fase 1 - Direto.txt', cluster_type="K-means"):
 
 
 if __name__ == "__main__":
-    # main('Fase 1 - Direto.txt', 'K-means')
-    # main('Fase 1 - Direto.txt', 'Agglomerative')
-    #main('Fase 2 - Cadeia de pensamento.txt', 'K-means')
-    # main('Fase 2 - Cadeia de pensamento.txt', 'Agglomerative')
-    # main('Fase 3 - Descrição.txt', 'K-means')
-    # main('Fase 3 - Descrição.txt', 'Agglomerative')
+    #main('Fase 1 - Direto.txt', 'K-means')
+    main('Fase 1 - Direto.txt', 'Agglomerative')
+    main('Fase 2 - Cadeia de pensamento.txt', 'K-means')
+    main('Fase 2 - Cadeia de pensamento.txt', 'Agglomerative')
+    main('Fase 3 - Descrição.txt', 'K-means')
+    main('Fase 3 - Descrição.txt', 'Agglomerative')
     main('Fase 4 - Com modelo.txt', 'K-means')
-    # main('Fase 4 - Com modelo.txt', 'Agglomerative')
+    main('Fase 4 - Com modelo.txt', 'Agglomerative')

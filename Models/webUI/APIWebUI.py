@@ -14,18 +14,16 @@ class APIWebUI:
             'Authorization': f'Bearer {self.api_key}',
             'Content-Type': 'application/json'
         }
-        #print(headers)
         data = {
-            #"model": "llama3.2:latest",
+            "model": "llama3.2:latest",
             #"model": "qwen2.5:latest",
             #"model": "mistral:latest",
-            "model": "deepseek-v2:latest",
+            #"model": "deepseek-v2:latest",
             "messages": [{"role": "user", "content": message}]
         }
 
         
         response = requests.post(f'{self.api_url}/api/chat/completions', headers=headers, json=data)
-        #response.raise_for_status()
         return response.json()
         
 
